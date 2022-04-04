@@ -1,0 +1,22 @@
+<%# app/views/posts/_form.html.erb %>
+
+<%= form_with(model: post) do |form| %>
+
+  <div class="field", class:"mb-3">
+    <%= form.label :title, class:"form-label" %>
+    <%= form.text_field :title, class:"form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description, class:"form-label" %>
+    <%= form.text_area :description, class:"form-control" %>
+  </div>
+    <br/>
+  <div class="actions" class="rounded-pill text-white bg-dark">
+    <%= form.submit %>
+  </div>
+  <%= current_user.inspect %>
+  
+<% end %>
+
+
