@@ -2,6 +2,7 @@
 
 <%= form_with(model: post) do |form| %>
 
+
   <div class="field", class:"mb-3">
     <%= form.label :title, class:"form-label" %>
     <%= form.text_field :title, class:"form-control" %>
@@ -15,7 +16,7 @@
   <div class="actions" class="rounded-pill text-white bg-dark">
     <%= form.submit %>
   </div>
-  <%= current_user.inspect %>
+  <% current_user %>
   
 <% end %>
 
