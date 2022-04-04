@@ -33,6 +33,22 @@ class PostsController < ApplicationController
         end
       end
     end
+
+    def create
+        @post = Post.new(post_params)
+
+        respond_to do |format|
+          if @post.save
+            format.html do
+              redirect_to @post, notice: "Post was successfully created!"
+            end
+            format.json { render json: @post.to_json }
+          else
+            format.html { render 'new'} ## Specify the format in which you are rendering "new" page
+            format.json { render json: @post.errors } ## You might want to specify a json format as well
+          end
+        end
+      end
   
     # PATCH/PUT /posts/1
     def update
