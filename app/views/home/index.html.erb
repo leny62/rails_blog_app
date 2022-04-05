@@ -2,18 +2,28 @@
   <!-- Navbar -->
 
   <!-- End Navbar -->
+  <p id="notice"><%= notice %></p>
   <div class="wrapper">
     <div class="page-header page-header-small">
       <div class="page-header-image" data-parallax="true" style="background-image: url('https://raw.githack.com/creativetimofficial/now-ui-kit/master/assets/img/bg6.jpg');">
       </div>
       <div class="content-center">
         <div class="container">
-          <h1 class="title">Welcome to My Rails Blog App</h1>
 
-          <h2>Let's get started</h2>
-            <h5>You can create a new blog post by first signing in</h5>
-          <div class="text-center">
-          </div>
+          <%if user_signed_in? %>
+          <h3>Welcome to my Blogs App, <%= current_user.email %></h3>
+          <br/>
+          <br/>
+          <h2>Navigate to the blogs page with the Navbar</h2>
+            <%= link_to 'Blogs', posts_path, class:"btn btn-secondary" %>
+          <%else%>
+          <h3>Welcome to the Blogs App</h3>
+          <br/>
+            <div class="text-center">
+              <h2>Let's get started</h2>
+            <h5>You can create a new blog post by first signing in or creating an account</h5>
+            </div>
+          <%end%>
         </div>
       </div>
     </div>
