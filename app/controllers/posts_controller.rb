@@ -1,16 +1,14 @@
 # app/controllers/posts_controller.rb
 
 class PostsController < ApplicationController
-    before_action :set_post, only: %i[ show edit update destroy ]
+    before_action :authenticate_user!, except: [:index, :show]
   
-    # GET /posts
+    # GET /posts or /posts.json
     def index
       @posts = Post.all
     end
   
-    # GET /posts/1
-    def show
-    end
+
   
     # GET /posts/new
     def new
@@ -21,51 +19,64 @@ class PostsController < ApplicationController
     def edit
     end
   
-    # POST /posts
     def create
-      @post = Post.new(post_params)
-  
-      respond_to do |format|
-        if @post.save
-          redirect_to @post, notice: "Post was successfully created."
-        else
-          render :new
-        end
-      end
-    end
-
-    def create
+        #@friend = Friend.new(friend_params)
         @post = Post.new(post_params)
-
+    
         respond_to do |format|
-          if @post.save
-            format.html do
-              redirect_to @post, notice: "Post was successfully created!"
+            if @post.save
+            format.html { redirect_to @post, notice: 'Post was successfully created.' }
+            format.json { render :show, status: :created, location: @post }
+            else
+            format.html { render :new }
+            format.json { render json: @post.errors, status: :unprocessable_entity }
             end
-            format.json { render json: @post.to_json }
-          else
-            format.html { render 'new'} ## Specify the format in which you are rendering "new" page
-            format.json { render json: @post.errors } ## You might want to specify a json format as well
-          end
         end
-      end
+    end
+    # POST /posts or /posts.json
+    # def create
+    #   @post = Post.new(post_params)
+
+    #   @post.save
+
+    #   redirect_to @post
+        
+
+    #   respond_to do |format|
+    #     if @post.save
+    #       format.html { redirect_to @post, notice: "Post was successfully created." }
+    #       format.json { render :show, status: :created, location: @post }
+    #     else
+    #       format.html { render :new, status: :unprocessable_entity }
+    #       format.json { render json: @post.errors, status: :unprocessable_entity }
+    #     end
+    #   end
+    # end
+
+        # GET /posts/1 or /posts/1.json
+        def show
+            @post = Post.find(params[:id])
+        end
   
-    # PATCH/PUT /posts/1
+    # PATCH/PUT /posts/1 or /posts/1.json
     def update
       respond_to do |format|
         if @post.update(post_params)
-          redirect_to @post, notice: "Post was successfully updated."
+          format.html { redirect_to @post, notice: "Post was successfully updated." }
+          format.json { render :show, status: :ok, location: @post }
         else
-          render :edit
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @post.errors, status: :unprocessable_entity }
         end
       end
     end
   
-    # DELETE /posts/1
+    # DELETE /posts/1 or /posts/1.json
     def destroy
       @post.destroy
       respond_to do |format|
-        redirect_to posts_url, notice: "Post was successfully destroyed."
+        format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+        format.json { head :no_content }
       end
     end
   
@@ -80,3 +91,4 @@ class PostsController < ApplicationController
         params.require(:post).permit(:title, :description)
       end
   end
+  
