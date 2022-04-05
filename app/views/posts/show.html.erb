@@ -8,12 +8,11 @@
 
 <div class="card-body">
   <strong class="card-title">Description:</strong>
-    <%= @post.description %>
-  <%# <%= sanitize Kramdown::Document.new(@post.description).to_html, class:"card-text" %> %>
+    <%# <%= @post.description %>
+  <%= sanitize Kramdown::Document.new(@post.description).to_html, class:"card-text" %>
 </div>
 </div>
 
 <%= link_to 'Edit', edit_post_path(@post), class:"btn btn-primary" %> |
-<%= link_to 'Back', posts_path, class:"btn btn-primary" %> %>
-
+<%= link_to 'Back', posts_path, class:"btn btn-primary" %>
 
